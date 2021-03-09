@@ -1,0 +1,2 @@
+-- SIPO (Serial-In Parallel-Out) Register
+-- By: Ryan Vickramasinghe
