@@ -6,9 +6,10 @@ use IEEE.std_logic_1164.all;
 
 entity ParityControl is
 	port (
-		msgIn: in STD_LOGIC_VECTOR(19 downto 0);
+		msg: in STD_LOGIC_VECTOR(19 downto 0);
 		load: in STD_LOGIC;
-		parOut: out STD_LOGIC_VECTOR(4 downto 0)
+		loadOut: out STD_LOGIC;
+		pmsg: out STD_LOGIC_VECTOR(24 downto 0)
 	);
 end ParityControl;
 
@@ -19,31 +20,35 @@ begin
 		if(load = '1') then
 			-- if we are loading, create and push parity bits
 			
-			parOut(0) <= msgIn(0) XOR msgIn(1) XOR msgIn(3)
-				XOR msgIn(4) XOR msgIn(6) XOR msgIn(8)
-				XOR msgIn(10) XOR msgIn(11) XOR msgIn(13)
-				XOR msgIn(15) XOR msgIn(17);
+			pmsg(20) <= msg(0) XOR msg(1) XOR msg(3)
+				XOR msg(4) XOR msg(6) XOR msg(8)
+				XOR msg(10) XOR msg(11) XOR msg(13)
+				XOR msg(15) XOR msg(17);
 				
-			parOut(1) <= msgIn(0) XOR msgIn(2) XOR msgIn(3)
-				XOR msgIn(5) XOR msgIn(6) XOR msgIn(9)
-				XOR msgIn(10) XOR msgIn(12) XOR msgIn(13)
-				XOR msgIn(16) XOR msgIn(17);
+			pmsg(21) <= msg(0) XOR msg(2) XOR msg(3)
+				XOR msg(5) XOR msg(6) XOR msg(9)
+				XOR msg(10) XOR msg(12) XOR msg(13)
+				XOR msg(16) XOR msg(17);
 				
-			parOut(2) <= msgIn(1) XOR msgIn(2) XOR msgIn(3)
-				XOR msgIn(7) XOR msgIn(8) XOR msgIn(9)
-				XOR msgIn(10) XOR msgIn(14) XOR msgIn(15)
-				XOR msgIn(16) XOR msgIn(17);
+			pmsg(22) <= msg(1) XOR msg(2) XOR msg(3)
+				XOR msg(7) XOR msg(8) XOR msg(9)
+				XOR msg(10) XOR msg(14) XOR msg(15)
+				XOR msg(16) XOR msg(17);
 				
-			parOut(3) <= msgIn(3) XOR msgIn(4) XOR msgIn(5)
-				XOR msgIn(6) XOR msgIn(7) XOR msgIn(8)
-				XOR msgIn(9) XOR msgIn(10);
+			pmsg(23) <= msg(3) XOR msg(4) XOR msg(5)
+				XOR msg(6) XOR msg(7) XOR msg(8)
+				XOR msg(9) XOR msg(10);
 				
-			parOut(4) <= msgIn(11) XOR msgIn(12) XOR msgIn(13)
-				XOR msgIn(14) XOR msgIn(15) XOR msgIn(16)
-				XOR msgIn(16) XOR msgIn(17);
+			pmsg(24) <= msg(11) XOR msg(12) XOR msg(13)
+				XOR msg(14) XOR msg(15) XOR msg(16)
+				XOR msg(16) XOR msg(17);
+			
+			-- original message
+			pmsg(19 downto 0) <= msg(19 downto 0);
+			
+			loadOut <= '1';
 		else
-			-- not loading, clear output
-			parOut <= "00000";
+			loadOut <= '0';
 		end if;
 	end process;
 end impl;

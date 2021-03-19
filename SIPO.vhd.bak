@@ -10,8 +10,8 @@ generic ( n : integer := 4);
 
 port( 
 	clk: in std_logic;
+	enable: in std_logic; --enables shifting
 	s_in: in std_logic; --serial input
-	rx: in std_logic; --enables shifting
 	
 	parallel_out: out std_logic_vector(n-1 downto 0)
 );
@@ -20,9 +20,9 @@ end SIPO;
 
 architecture behavioral of SIPO is
 
+signal temp_reg: std_logic_vector(n-1 downto 0) := (Others => '0');
 TYPE POSSIBLE_STATES IS (waiting, shifting);
 signal state : POSSIBLE_STATES;
-
 begin
 
 process(clk)
@@ -34,7 +34,7 @@ begin
             when waiting =>
 					shift_counter := 0;
 					
-					if(rx = '1') then
+					if(enable = '1') then
 						state <= shifting;
 					else
 						state <= waiting;

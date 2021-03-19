@@ -21,14 +21,14 @@ https://fpgasoftware.intel.com/eula.
 */
 (header "symbol" (version "1.1"))
 (symbol
-	(rect 16 16 216 96)
+	(rect 16 16 208 96)
 	(text "ParityControl" (rect 5 0 56 12)(font "Arial" ))
 	(text "inst" (rect 8 64 20 76)(font "Arial" ))
 	(port
 		(pt 0 32)
 		(input)
-		(text "msgIn[19..0]" (rect 0 0 48 12)(font "Arial" ))
-		(text "msgIn[19..0]" (rect 21 27 69 39)(font "Arial" ))
+		(text "msg[19..0]" (rect 0 0 41 12)(font "Arial" ))
+		(text "msg[19..0]" (rect 21 27 62 39)(font "Arial" ))
 		(line (pt 0 32)(pt 16 32)(line_width 3))
 	)
 	(port
@@ -39,13 +39,20 @@ https://fpgasoftware.intel.com/eula.
 		(line (pt 0 48)(pt 16 48)(line_width 1))
 	)
 	(port
-		(pt 200 32)
+		(pt 192 32)
 		(output)
-		(text "parOut[4..0]" (rect 0 0 48 12)(font "Arial" ))
-		(text "parOut[4..0]" (rect 131 27 179 39)(font "Arial" ))
-		(line (pt 200 32)(pt 184 32)(line_width 3))
+		(text "loadOut" (rect 0 0 29 12)(font "Arial" ))
+		(text "loadOut" (rect 142 27 171 39)(font "Arial" ))
+		(line (pt 192 32)(pt 176 32)(line_width 1))
+	)
+	(port
+		(pt 192 48)
+		(output)
+		(text "pmsg[24..0]" (rect 0 0 48 12)(font "Arial" ))
+		(text "pmsg[24..0]" (rect 123 43 171 55)(font "Arial" ))
+		(line (pt 192 48)(pt 176 48)(line_width 3))
 	)
 	(drawing
-		(rectangle (rect 16 16 184 64)(line_width 1))
+		(rectangle (rect 16 16 176 64)(line_width 1))
 	)
 )
