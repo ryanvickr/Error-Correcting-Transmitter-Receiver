@@ -7,7 +7,7 @@ use IEEE.std_logic_1164.all;
 
 entity PISO is
 
-generic ( n : integer := 25);
+generic ( n : integer := 4);
 
 port( 
 	clk: in std_logic; 

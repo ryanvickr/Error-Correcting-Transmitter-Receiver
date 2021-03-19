@@ -1,56 +1,47 @@
--- SIPO (Serial-In Parallel-Out) Register
+-- SIPO (Serial-in, Parallel-out) Register
 -- By: Ryan Vickramasinghe
 
-library IEEE; 
-use IEEE.std_logic_1164.all;
+library ieee; 
+use ieee.std_logic_1164.all;
 
 entity SIPO is
 
 generic ( n : integer := 4);
 
 port( 
-	clk: in std_logic;
+	clk: in std_logic; 
+	reset: in std_logic; 
+	rx: in std_logic; --enables shifting 
 	s_in: in std_logic; --serial input
-	rx: in std_logic; --enables shifting
-	
-	parallel_out: out std_logic_vector(n-1 downto 0)
+		
+	parallel_out: out std_logic_vector(n-1 downto 0);  --parallel out
+	done: out std_logic
 );
-
 end SIPO;
 
 architecture behavioral of SIPO is
 
-TYPE POSSIBLE_STATES IS (waiting, shifting);
-signal state : POSSIBLE_STATES;
-
 begin
 
-process(clk)
-    variable shift_counter: integer := 0;
+process(clk,reset)
+	variable tempReg: std_logic_vector(n-1 downto 0);
+   variable i: integer := 0;
 begin
 
-   if(clk'event and clk='1') then
-        case state is
-            when waiting =>
-					shift_counter := 0;
-					
-					if(rx = '1') then
-						state <= shifting;
-					else
-						state <= waiting;
-					end if;
-					
-            when shifting =>
-					parallel_out(shift_counter) <= s_in;
-					shift_counter := shift_counter + 1;
-					
-					if (shift_counter >= n) then
-                  state <= waiting;
-               else
-                  state <= shifting;
-               end if;
-        end case;
-    end if;
+   if (reset = '1') then
+		tempReg := (others => '0');
+		parallel_out <= (others => '0');
+		done <= '0';
+		i := 0;
+	elsif (clk'event and clk = '1' and rx = '1') then
+		tempReg(i) := s_in;
+		done <= '0';
+		i := i + 1;
+	elsif (clk'event and clk = '1' and rx = '0') then
+		parallel_out <= tempReg;
+		done <= '1';
+		i := 0;
+	end if;
 end process;
 
 end behavioral;

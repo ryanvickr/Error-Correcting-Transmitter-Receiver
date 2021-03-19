@@ -21,7 +21,7 @@ https://fpgasoftware.intel.com/eula.
 */
 (header "symbol" (version "1.2"))
 (symbol
-	(rect 16 16 160 144)
+	(rect 16 16 168 144)
 	(text "Transmitter" (rect 5 0 74 19)(font "Intel Clear" (font_size 8)))
 	(text "inst" (rect 8 107 24 124)(font "Intel Clear" ))
 	(port
@@ -53,20 +53,20 @@ https://fpgasoftware.intel.com/eula.
 		(line (pt 0 80)(pt 16 80))
 	)
 	(port
-		(pt 144 32)
+		(pt 152 32)
 		(output)
-		(text "dout" (rect 0 0 27 19)(font "Intel Clear" (font_size 8)))
-		(text "dout" (rect 96 27 123 46)(font "Intel Clear" (font_size 8)))
-		(line (pt 144 32)(pt 128 32))
+		(text "s_out" (rect 0 0 31 19)(font "Intel Clear" (font_size 8)))
+		(text "s_out" (rect 100 27 131 46)(font "Intel Clear" (font_size 8)))
+		(line (pt 152 32)(pt 136 32))
 	)
 	(port
-		(pt 144 48)
+		(pt 152 48)
 		(output)
 		(text "tx" (rect 0 0 10 19)(font "Intel Clear" (font_size 8)))
-		(text "tx" (rect 113 43 123 62)(font "Intel Clear" (font_size 8)))
-		(line (pt 144 48)(pt 128 48))
+		(text "tx" (rect 121 43 131 62)(font "Intel Clear" (font_size 8)))
+		(line (pt 152 48)(pt 136 48))
 	)
 	(drawing
-		(rectangle (rect 16 16 128 112))
+		(rectangle (rect 16 16 136 112))
 	)
 )

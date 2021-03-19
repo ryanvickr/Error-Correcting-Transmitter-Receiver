@@ -20,6 +20,8 @@ proc simTimestamp {} {
 after 2500 simTimestamp
 run -all
 quit -f
+
+
 </modelsim_script>
 <modelsim_script_timing>onerror {exit -code 1}
 vlib work
@@ -38,6 +40,8 @@ proc simTimestamp {} {
 after 2500 simTimestamp
 run -all
 quit -f
+
+
 </modelsim_script_timing>
 <hdl_lang>vhdl</hdl_lang>
 </simulation_settings>*/
@@ -69,10 +73,10 @@ HEADER
 	VERSION = 1;
 	TIME_UNIT = ns;
 	DATA_OFFSET = 0.0;
-	DATA_DURATION = 200.0;
+	DATA_DURATION = 1000.0;
 	SIMULATION_TIME = 0.0;
 	GRID_PHASE = 0.0;
-	GRID_PERIOD = 5.0;
+	GRID_PERIOD = 10.0;
 	GRID_DUTY_CYCLE = 50;
 }
 
@@ -86,13 +90,13 @@ SIGNAL("clk")
 	PARENT = "";
 }
 
-SIGNAL("enable")
+SIGNAL("done")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
 	SIGNAL_TYPE = SINGLE_BIT;
 	WIDTH = 1;
 	LSB_INDEX = -1;
-	DIRECTION = INPUT;
+	DIRECTION = OUTPUT;
 	PARENT = "";
 }
 
@@ -146,6 +150,26 @@ SIGNAL("parallel_out[0]")
 	PARENT = "parallel_out";
 }
 
+SIGNAL("reset")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = INPUT;
+	PARENT = "";
+}
+
+SIGNAL("rx")
+{
+	VALUE_TYPE = NINE_LEVEL_BIT;
+	SIGNAL_TYPE = SINGLE_BIT;
+	WIDTH = 1;
+	LSB_INDEX = -1;
+	DIRECTION = INPUT;
+	PARENT = "";
+}
+
 SIGNAL("s_in")
 {
 	VALUE_TYPE = NINE_LEVEL_BIT;
@@ -163,21 +187,19 @@ TRANSITION_LIST("clk")
 		REPEAT = 1;
 		NODE
 		{
-			REPEAT = 20;
+			REPEAT = 100;
 			LEVEL 0 FOR 5.0;
 			LEVEL 1 FOR 5.0;
 		}
 	}
 }
 
-TRANSITION_LIST("enable")
+TRANSITION_LIST("done")
 {
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL 0 FOR 25.0;
-		LEVEL 1 FOR 40.0;
-		LEVEL 0 FOR 135.0;
+		LEVEL X FOR 1000.0;
 	}
 }
 
@@ -186,7 +208,7 @@ TRANSITION_LIST("parallel_out[3]")
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL X FOR 200.0;
+		LEVEL X FOR 1000.0;
 	}
 }
 
@@ -195,7 +217,7 @@ TRANSITION_LIST("parallel_out[2]")
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL X FOR 200.0;
+		LEVEL X FOR 1000.0;
 	}
 }
 
@@ -204,7 +226,7 @@ TRANSITION_LIST("parallel_out[1]")
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL X FOR 200.0;
+		LEVEL X FOR 1000.0;
 	}
 }
 
@@ -213,7 +235,27 @@ TRANSITION_LIST("parallel_out[0]")
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL X FOR 200.0;
+		LEVEL X FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("reset")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL 0 FOR 1000.0;
+	}
+}
+
+TRANSITION_LIST("rx")
+{
+	NODE
+	{
+		REPEAT = 1;
+		LEVEL 0 FOR 10.0;
+		LEVEL 1 FOR 40.0;
+		LEVEL 0 FOR 950.0;
 	}
 }
 
@@ -222,11 +264,11 @@ TRANSITION_LIST("s_in")
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL 0 FOR 35.0;
+		LEVEL 0 FOR 10.0;
 		LEVEL 1 FOR 10.0;
 		LEVEL 0 FOR 10.0;
 		LEVEL 1 FOR 10.0;
-		LEVEL 0 FOR 135.0;
+		LEVEL 0 FOR 960.0;
 	}
 }
 
@@ -241,7 +283,7 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "enable";
+	CHANNEL = "rx";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 1;
@@ -259,12 +301,30 @@ DISPLAY_LINE
 
 DISPLAY_LINE
 {
-	CHANNEL = "parallel_out";
+	CHANNEL = "reset";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
 	TREE_INDEX = 3;
 	TREE_LEVEL = 0;
-	CHILDREN = 4, 5, 6, 7;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "done";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 4;
+	TREE_LEVEL = 0;
+}
+
+DISPLAY_LINE
+{
+	CHANNEL = "parallel_out";
+	EXPAND_STATUS = COLLAPSED;
+	RADIX = Binary;
+	TREE_INDEX = 5;
+	TREE_LEVEL = 0;
+	CHILDREN = 6, 7, 8, 9;
 }
 
 DISPLAY_LINE
@@ -272,9 +332,9 @@ DISPLAY_LINE
 	CHANNEL = "parallel_out[3]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
-	TREE_INDEX = 4;
+	TREE_INDEX = 6;
 	TREE_LEVEL = 1;
-	PARENT = 3;
+	PARENT = 5;
 }
 
 DISPLAY_LINE
@@ -282,9 +342,9 @@ DISPLAY_LINE
 	CHANNEL = "parallel_out[2]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
-	TREE_INDEX = 5;
+	TREE_INDEX = 7;
 	TREE_LEVEL = 1;
-	PARENT = 3;
+	PARENT = 5;
 }
 
 DISPLAY_LINE
@@ -292,9 +352,9 @@ DISPLAY_LINE
 	CHANNEL = "parallel_out[1]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
-	TREE_INDEX = 6;
+	TREE_INDEX = 8;
 	TREE_LEVEL = 1;
-	PARENT = 3;
+	PARENT = 5;
 }
 
 DISPLAY_LINE
@@ -302,9 +362,9 @@ DISPLAY_LINE
 	CHANNEL = "parallel_out[0]";
 	EXPAND_STATUS = COLLAPSED;
 	RADIX = Binary;
-	TREE_INDEX = 7;
+	TREE_INDEX = 9;
 	TREE_LEVEL = 1;
-	PARENT = 3;
+	PARENT = 5;
 }
 
 TIME_BAR

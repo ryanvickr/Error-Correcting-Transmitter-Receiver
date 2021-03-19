@@ -39,7 +39,7 @@
 
 set_global_assignment -name FAMILY "Cyclone V"
 set_global_assignment -name DEVICE 5CGXFC7C7F23C8
-set_global_assignment -name TOP_LEVEL_ENTITY Transmitter
+set_global_assignment -name TOP_LEVEL_ENTITY ErrorCorrectionControl
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 20.1.1
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "11:41:20  MARCH 06, 2021"
 set_global_assignment -name LAST_QUARTUS_VERSION "20.1.1 Lite Edition"
@@ -50,11 +50,20 @@ set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
 set_global_assignment -name VHDL_FILE ParityControl.vhd
 set_global_assignment -name VECTOR_WAVEFORM_FILE Waveform_ParityControl.vwf
 set_global_assignment -name VHDL_FILE SIPO.vhd
-set_global_assignment -name VECTOR_WAVEFORM_FILE Waveform_SIPO.vwf
 set_global_assignment -name VHDL_FILE ErrorCorrectionControl.vhd
-set_global_assignment -name VHDL_FILE PISO_N.vhd
 set_global_assignment -name BDF_FILE Transmitter.bdf
+set_global_assignment -name BDF_FILE Test_Transmitter.bdf
+set_global_assignment -name VECTOR_WAVEFORM_FILE Waveform_Test_Transmitter.vwf
+set_global_assignment -name VHDL_FILE PISO.vhd
+set_global_assignment -name VECTOR_WAVEFORM_FILE Waveform_PISO.vwf
+set_global_assignment -name VECTOR_WAVEFORM_FILE Waveform_Transmitter.vwf
+set_global_assignment -name BDF_FILE Receiver.bdf
+set_global_assignment -name BDF_FILE Test_Receiver.bdf
+set_global_assignment -name VECTOR_WAVEFORM_FILE Waveform_Receiver.vwf
+set_global_assignment -name VECTOR_WAVEFORM_FILE Waveform_Test_Receiver.vwf
+set_global_assignment -name VECTOR_WAVEFORM_FILE Waveform_SIPO.vwf
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
+set_global_assignment -name VECTOR_WAVEFORM_FILE Waveform_ErrorCorrectionControl.vwf
